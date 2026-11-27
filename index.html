@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake &amp; Ladder Arena — Neon Board Gaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-theme="neon">
+  <!-- PAGE 01: SPLASH SCREEN -->
+  <section id="splash-screen" class="splash-screen">
+    <div class="splash-bg-orb orb-1"></div>
+    <div class="splash-bg-orb orb-2"></div>
+    <div class="splash-card">
+      <div class="splash-logo-wrap">
+        <div class="splash-dice-icon">🎲</div>
+        <div class="splash-badge">ARCADE EDITION</div>
+      </div>
+      <h1 class="splash-title">SNAKE &amp; LADDER <span>ARENA</span></h1>
+      <p class="splash-subtitle">Climb the Neon Ladders. Dodge the Cyber Serpents. Claim 100.</p>
+      <div class="splash-loader">
+        <div id="splash-progress" class="splash-progress"></div>
+      </div>
+      <div class="splash-actions">
+        <button id="enter-arena-btn" class="btn btn-primary btn-lg">Enter Arena</button>
+        <button id="quick-play-splash-btn" class="btn btn-ghost">Quick Play vs Bot</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APP SHELL -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="nav-left">
+        <button id="mobile-menu-btn" class="icon-btn mobile-only" aria-label="Toggle Menu">☰</button>
+        <a href="#home" class="brand" data-route="home">
+          <span class="brand-icon">🐍</span>
+          <span class="brand-text">Snake &amp; Ladder <em>Arena</em></span>
+        </a>
+      </div>
+
+      <nav id="main-nav" class="nav-links">
+        <a href="#home" class="nav-link" data-route="home">Home</a>
+        <a href="#dashboard" class="nav-link" data-route="dashboard">Dashboard</a>
+        <a href="#modes" class="nav-link" data-route="modes">Play</a>
+        <a href="#lobby" class="nav-link" data-route="lobby">Lobby</a>
+        <a href="#leaderboard" class="nav-link" data-route="leaderboard">Leaderboard</a>
+        <a href="#achievements" class="nav-link" data-route="achievements">Badges</a>
+        <a href="#friends" class="nav-link" data-route="friends">Friends</a>
+        <a href="#support" class="nav-link" data-route="support">How to Play</a>
+      </nav>
+
+      <div class="nav-right">
+        <button id="sound-quick-toggle" class="icon-btn" title="Toggle Sound">🔊</button>
+        <div id="nav-auth-area" class="nav-auth-area"></div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT ROUTER OUTLET -->
+    <main id="page-container" class="page-container">
+
+      <!-- PAGE 02: HOME PAGE -->
+      <section id="page-home" class="page active">
+        <div class="hero-card">
+          <div class="hero-content">
+            <span class="pill pill-accent">✨ Classic Board Game, Reimagined</span>
+            <h1 class="hero-title">Roll the Dice. Rule the <span>10×10 Neon Grid</span>.</h1>
+            <p class="hero-desc">
+              Challenge our tactical AI Bot, play pass-and-play with friends on one screen, or host a custom Arena room.
+              Track wins, unlock glowing badges, and climb to the top of the leaderboard.
+            </p>
+            <div class="hero-cta">
+              <button class="btn btn-primary btn-lg" data-nav="modes">🎮 Play Now</button>
+              <button class="btn btn-secondary btn-lg" data-nav="game-quick">⚡ Instant Bot Match</button>
+              <button class="btn btn-ghost" data-nav="support">📖 Rules</button>
+            </div>
+            <div class="hero-stats-strip">
+              <div class="mini-stat"><strong id="home-stat-players">1,240+</strong><span>Arena Players</span></div>
+              <div class="mini-stat"><strong id="home-stat-matches">8,950+</strong><span>Matches Played</span></div>
+              <div class="mini-stat"><strong>3 Modes</strong><span>Bot · Local · Room</span></div>
+            </div>
+          </div>
+
+          <div class="hero-preview">
+            <div class="mini-board-art">
+              <div class="mini-cell c-win">100 🏆</div>
+              <div class="mini-cell">99 🐍</div>
+              <div class="mini-cell">84 🪜</div>
+              <div class="mini-cell c-hi">71 🪜</div>
+              <div class="mini-cell">51 🪜</div>
+              <div class="mini-cell">49 🐍</div>
+              <div class="mini-cell c-hi">28 🪜</div>
+              <div class="mini-cell">16 🐍</div>
+              <div class="mini-cell c-start">1 ▶</div>
+              <div class="mini-floating-dice">🎲</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-grid-3">
+          <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3>Smart AI &amp; Local Play</h3>
+            <p>Play solo against an adaptive Bot or gather 2–4 friends on the same device with animated tokens.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Smooth 3D Dice &amp; Audio</h3>
+            <p>Crisp synthesized dice rattles, ladder chimes, snake slides, and step-by-step hopping animations.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏆</div>
+            <h3>Badges &amp; Leaderboards</h3>
+            <p>Unlock 6 unique arena achievements, review full match history, and compete across rankings.</p>
+          </div>
+        </div>
+
+        <div class="card home-leaderboard-preview">
+          <div class="card-header">
+            <h2>🔥 Top Arena Champions</h2>
+            <button class="btn btn-sm btn-ghost" data-nav="leaderboard">View Full Leaderboard →</button>
+          </div>
+          <div id="home-top-players" class="top-players-list"></div>
+        </div>
+      </section>
+
+      <!-- PAGE 03: LOGIN & REGISTRATION -->
+      <section id="page-auth" class="page hidden">
+        <div class="auth-wrapper">
+          <div class="card auth-card">
+            <div class="auth-tabs">
+              <button id="tab-login" class="auth-tab active">Login</button>
+              <button id="tab-register" class="auth-tab">Register</button>
+            </div>
+
+            <form id="login-form" class="auth-form">
+              <h2>Welcome Back, Player</h2>
+              <p class="muted">Sign in to save your stats, badges, and match history.</p>
+              <div class="form-group">
+                <label for="login-email">Email or Username</label>
+                <input id="login-email" type="text" placeholder="player@arena.gg" required />
+              </div>
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="password-wrap">
+                  <input id="login-password" type="password" placeholder="Enter password" required />
+                  <button type="button" class="toggle-pass" data-target="login-password">👁</button>
+                </div>
+              </div>
+              <div id="login-error" class="form-error"></div>
+              <button type="submit" class="btn btn-primary btn-block">Login to Arena</button>
+              <div class="auth-demo-hint">
+                <span>Quick Demo:</span>
+                <button type="button" id="demo-player-btn" class="link-btn">Player Demo</button> ·
+                <button type="button" id="demo-admin-btn" class="link-btn">Admin Demo</button>
+              </div>
+            </form>
+
+            <form id="register-form" class="auth-form hidden">
+              <h2>Create Arena Account</h2>
+              <p class="muted">Join the 10×10 battlefield and start climbing.</p>
+              <div class="form-group">
+                <label for="reg-username">Username</label>
+                <input id="reg-username" type="text" minlength="3" maxlength="18" placeholder="CyberStriker" required />
+              </div>
+              <div class="form-group">
+                <label for="reg-email">Email</label>
+                <input id="reg-email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div class="form-group">
+                <label for="reg-password">Password</label>
+                <div class="password-wrap">
+                  <input id="reg-password" type="password" minlength="4" placeholder="Min 4 characters" required />
+                  <button type="button" class="toggle-pass" data-target="reg-password">👁</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reg-confirm">Confirm Password</label>
+                <input id="reg-confirm" type="password" placeholder="Repeat password" required />
+              </div>
+              <div id="reg-error" class="form-error"></div>
+              <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 04: PLAYER DASHBOARD -->
+      <section id="page-dashboard" class="page hidden">
+        <div class="dashboard-hero card">
+          <div class="dash-user">
+            <div id="dash-avatar" class="avatar-xl">🦊</div>
+            <div>
+              <span class="pill pill-secondary">Active Challenger</span>
+              <h1 id="dash-welcome">Welcome, Player!</h1>
+              <p id="dash-player-id" class="muted">Player ID: #ARENA-001</p>
+            </div>
+          </div>
+          <div class="dash-actions">
+            <button class="btn btn-primary" data-nav="modes">🎮 Play New Match</button>
+            <button class="btn btn-ghost" data-nav="profile">Edit Profile</button>
+          </div>
+        </div>
+
+        <div class="stats-grid-4">
+          <div class="stat-card">
+            <span class="stat-label">Total Games</span>
+            <strong id="dash-total-games" class="stat-value">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Total Wins</span>
+            <strong id="dash-total-wins" class="stat-value accent">0</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Win Percentage</span>
+            <strong id="dash-win-rate" class="stat-value gold">0%</strong>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Badges Unlocked</span>
+            <strong id="dash-badges-count" class="stat-value purple">0 / 6</strong>
+          </div>
+        </div>
+
+        <div class="section-grid-2">
+          <div class="card">
+            <div class="card-header">
+              <h2>🕒 Recent Matches</h2>
+              <button class="btn btn-sm btn-ghost" data-nav="history">See All</button>
+            </div>
+            <div id="dash-recent-matches" class="list-stack"></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h2>🏅 Achievement Badges</h2>
+              <button class="btn btn-sm btn-ghost" data-nav="achievements">View All</button>
+            </div>
+            <div id="dash-badges-preview" class="badges-mini-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 06: GAME MODE SELECTION -->
+      <section id="page-modes" class="page hidden">
+        <div class="page-head">
+          <h1>Select Game Mode</h1>
+          <p class="muted">Choose how you want to conquer the 1–100 board.</p>
+        </div>
+
+        <div class="modes-grid">
+          <div class="card mode-card" data-mode="single">
+            <div class="mode-badge">SOLO</div>
+            <div class="mode-icon">🤖</div>
+            <h3>Single Player</h3>
+            <p>Face off against our Arena AI Bot. Great for quick matches and practicing strategy.</p>
+            <button class="btn btn-primary start-mode-btn" data-mode="single">Play vs Bot</button>
+          </div>
+
+          <div class="card mode-card" data-mode="local">
+            <div class="mode-badge secondary">PASS &amp; PLAY</div>
+            <div class="mode-icon">👥</div>
+            <h3>Local Multiplayer</h3>
+            <p>2 to 4 players on the same device. Customize player names, colors, and take turns rolling.</p>
+            <div class="local-setup">
+              <label for="local-player-count">Players:</label>
+              <select id="local-player-count">
+                <option value="2" selected>2 Players</option>
+                <option value="3">3 Players</option>
+                <option value="4">4 Players</option>
+              </select>
+            </div>
+            <div id="local-player-names" class="local-names-grid"></div>
+            <button class="btn btn-secondary start-mode-btn" data-mode="local">Start Local Match</button>
+          </div>
+
+          <div class="card mode-card" data-mode="lobby">
+            <div class="mode-badge gold">ROOM ARENA</div>
+            <div class="mode-icon">🌐</div>
+            <h3>Room Lobby</h3>
+            <p>Create a Public or Private Room ID, ready up with bots or local/invited friends, and launch!</p>
+            <button class="btn btn-gold" data-nav="lobby">Open Game Lobby</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 05: GAME LOBBY -->
+      <section id="page-lobby" class="page hidden">
+        <div class="page-head">
+          <h1>Arena Game Lobby</h1>
+          <p class="muted">Create a room, share the Room ID, or join an active public table.</p>
+        </div>
+
+        <div class="section-grid-2">
+          <div class="card">
+            <h2>➕ Create / Configure Room</h2>
+            <div class="form-group">
+              <label for="lobby-room-type">Room Visibility</label>
+              <select id="lobby-room-type">
+                <option value="public">Public Room</option>
+                <option value="private">Private Room (Invite Code)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="lobby-max-players">Max Players</label>
+              <select id="lobby-max-players">
+                <option value="2">2 Players</option>
+                <option value="3">3 Players</option>
+                <option value="4" selected>4 Players</option>
+              </select>
+            </div>
+            <button id="create-room-btn" class="btn btn-primary">Create New Room</button>
+
+            <hr class="divider" />
+
+            <h3>🔑 Join Room by Code</h3>
+            <div class="inline-form">
+              <input id="join-room-code" type="text" placeholder="Enter Room ID (e.g. ARENA7)" maxlength="8" />
+              <button id="join-room-btn" class="btn btn-secondary">Join</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>🎮 Active Waiting Room</h2>
+              <span id="lobby-room-code-pill" class="pill pill-gold">NO ROOM</span>
+            </div>
+            <div id="lobby-waiting-area" class="lobby-waiting-area">
+              <p class="muted">Create or join a room to view players and ready status.</p>
+            </div>
+            <div class="lobby-footer-actions">
+              <button id="lobby-add-bot-btn" class="btn btn-ghost btn-sm" disabled>+ Add AI Bot</button>
+              <button id="lobby-ready-btn" class="btn btn-secondary btn-sm" disabled>Toggle Ready</button>
+              <button id="lobby-start-btn" class="btn btn-primary btn-sm" disabled>Launch Match</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🌍 Open Public Tables (Click to Join)</h2>
+          <div id="public-rooms-list" class="public-rooms-grid"></div>
+        </div>
+      </section>
+
+      <!-- PAGE 07: MAIN GAME BOARD -->
+      <section id="page-game" class="page hidden">
+        <div class="game-layout">
+          <!-- LEFT: 10x10 BOARD -->
+          <div class="board-stage card">
+            <div class="board-topbar">
+              <div class="turn-pill">
+                <span id="turn-dot" class="player-dot"></span>
+                <span id="turn-label">Player 1's Turn</span>
+              </div>
+              <div class="board-meta">
+                <span id="game-mode-badge" class="pill pill-accent">Single Player</span>
+                <span id="game-timer" class="timer-pill">⏱ 00:00</span>
+              </div>
+            </div>
+
+            <div class="board-container">
+              <div id="game-board" class="game-board"></div>
+              <svg id="board-overlay" class="board-overlay" viewBox="0 0 1000 1000" preserveAspectRatio="none"></svg>
+              <div id="tokens-layer" class="tokens-layer"></div>
+            </div>
+          </div>
+
+          <!-- RIGHT: CONTROLS, PLAYERS & LOG -->
+          <aside class="game-sidebar">
+            <div class="card dice-panel">
+              <div class="dice-stage">
+                <div id="dice-box" class="dice-box" data-face="1">
+                  <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+                  <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+                  <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+                </div>
+                <div class="dice-info">
+                  <div id="dice-result-text" class="dice-result">Roll to Start!</div>
+                  <div id="move-status-text" class="muted">Press Space or click Roll</div>
+                </div>
+              </div>
+              <button id="roll-dice-btn" class="btn btn-primary btn-lg btn-block">🎲 Roll Dice</button>
+              <div class="game-controls-row">
+                <button id="pause-game-btn" class="btn btn-ghost btn-sm">⏸ Pause</button>
+                <button id="restart-game-btn" class="btn btn-ghost btn-sm">🔄 Restart</button>
+                <button id="exit-game-btn" class="btn btn-ghost btn-sm">🚪 Exit</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>👥 Players</h3>
+              <div id="game-players-list" class="players-score-list"></div>
+            </div>
+
+            <div class="card">
+              <h3>📜 Live Match Feed</h3>
+              <div id="game-log" class="game-log"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PAGE 08: LEADERBOARD -->
+      <section id="page-leaderboard" class="page hidden">
+        <div class="page-head">
+          <h1>Arena Leaderboard</h1>
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-period="global">Global</button>
+            <button class="filter-tab" data-period="weekly">Weekly</button>
+            <button class="filter-tab" data-period="monthly">Monthly</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="arena-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th>Games</th>
+                  <th>Wins</th>
+                  <th>Win %</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 09: MY PROFILE -->
+      <section id="page-profile" class="page hidden">
+        <div class="page-head">
+          <h1>My Profile</h1>
+        </div>
+        <div class="section-grid-2">
+          <div class="card">
+            <div class="profile-summary">
+              <div id="profile-avatar-display" class="avatar-xl">🦊</div>
+              <div>
+                <h2 id="profile-username-display">Guest</h2>
+                <p id="profile-id-display" class="muted">ID: #ARENA-000</p>
+                <p id="profile-joined-display" class="muted">Joined: —</p>
+              </div>
+            </div>
+            <div class="stats-grid-2">
+              <div class="mini-box"><span class="muted">Ladders Climbed</span><strong id="prof-ladders">0</strong></div>
+              <div class="mini-box"><span class="muted">Snakes Bitten</span><strong id="prof-snakes">0</strong></div>
+              <div class="mini-box"><span class="muted">Sixes Rolled</span><strong id="prof-sixes">0</strong></div>
+              <div class="mini-box"><span class="muted">Win Rate</span><strong id="prof-winrate">0%</strong></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>✏️ Edit Profile</h2>
+            <form id="edit-profile-form">
+              <div class="form-group">
+                <label for="edit-username">Display Name</label>
+                <input id="edit-username" type="text" minlength="3" maxlength="18" required />
+              </div>
+              <div class="form-group">
+                <label>Choose Avatar</label>
+                <div id="avatar-picker" class="avatar-picker"></div>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+              <span id="profile-save-msg" class="save-msg"></span>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 10: GAME HISTORY -->
+      <section id="page-history" class="page hidden">
+        <div class="page-head">
+          <h1>Match History</h1>
+          <div class="inline-form">
+            <input id="history-search" type="search" placeholder="Search opponent or winner..." />
+            <select id="history-mode-filter">
+              <option value="all">All Modes</option>
+              <option value="single">Single Player</option>
+              <option value="local">Local Multiplayer</option>
+              <option value="lobby">Room Arena</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="arena-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Mode</th>
+                  <th>Players</th>
+                  <th>Winner</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody id="history-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 11: ACHIEVEMENTS & REWARDS -->
+      <section id="page-achievements" class="page hidden">
+        <div class="page-head">
+          <div>
+            <h1>Achievements &amp; Rewards</h1>
+            <p class="muted">Earn Arena Coins, level up XP, claim daily bonuses, and unlock glowing token skins.</p>
+          </div>
+          <button id="claim-daily-btn" class="btn btn-gold">🎁 Claim Daily (+100 Coins)</button>
+        </div>
+
+        <div class="stats-grid-4">
+          <div class="stat-card"><span class="stat-label">Arena Coins</span><strong id="rewards-coins" class="stat-value gold">0</strong></div>
+          <div class="stat-card"><span class="stat-label">Player Level</span><strong id="rewards-level" class="stat-value accent">Lv 1</strong></div>
+          <div class="stat-card"><span class="stat-label">Total XP</span><strong id="rewards-xp" class="stat-value purple">0 XP</strong></div>
+          <div class="stat-card"><span class="stat-label">Equipped Skin</span><strong id="rewards-equipped" class="stat-value">🟢</strong></div>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.25rem;">
+          <div class="card-header">
+            <h2>🛒 Token Skin Shop</h2>
+            <span class="muted">Win matches (+80 coins) or play (+25 coins) to unlock</span>
+          </div>
+          <div id="rewards-shop-grid" class="achievements-grid"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>🏅 Achievement Badges</h2>
+          </div>
+          <div id="achievements-grid" class="achievements-grid"></div>
+        </div>
+      </section>
+
+      <!-- PAGE 12: FRIENDS SYSTEM -->
+      <section id="page-friends" class="page hidden">
+        <div class="page-head">
+          <h1>Friends &amp; Rivals</h1>
+        </div>
+        <div class="section-grid-2">
+          <div class="card">
+            <h2>🔍 Find &amp; Add Players</h2>
+            <div class="inline-form">
+              <input id="friend-search-input" type="text" placeholder="Search player name..." />
+              <button id="friend-add-btn" class="btn btn-primary">Add Friend</button>
+            </div>
+            <div id="friend-requests-section" class="list-stack" style="margin-top: 1rem;"></div>
+          </div>
+
+          <div class="card">
+            <h2>🟢 Friends Roster</h2>
+            <div id="friends-list" class="list-stack"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 13: SETTINGS -->
+      <section id="page-settings" class="page hidden">
+        <div class="page-head">
+          <h1>Game Settings</h1>
+        </div>
+        <div class="card settings-card">
+          <div class="setting-row">
+            <div>
+              <strong>Sound Effects (SFX)</strong>
+              <p class="muted">Dice roll, token hops, ladders, snakes &amp; victory chimes</p>
+            </div>
+            <input id="setting-sfx" type="checkbox" class="toggle-switch" checked />
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Ambient Synth Music</strong>
+              <p class="muted">Soft background arcade pulse while playing</p>
+            </div>
+            <input id="setting-music" type="checkbox" class="toggle-switch" />
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Extra Turn on Rolling 6</strong>
+              <p class="muted">Rolling a 6 grants an extra roll (max 2 consecutive bonus rolls)</p>
+            </div>
+            <input id="setting-extra-six" type="checkbox" class="toggle-switch" checked />
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Board &amp; UI Theme</strong>
+              <p class="muted">Switch visual palette across the platform</p>
+            </div>
+            <select id="setting-theme">
+              <option value="neon">Dark Neon Cyber (Default)</option>
+              <option value="jungle">Emerald Jungle</option>
+              <option value="royal">Royal Gold Arena</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Language</strong>
+              <p class="muted">Interface display language</p>
+            </div>
+            <select id="setting-language">
+              <option value="en">English</option>
+              <option value="te">Telugu / Tenglish Labels</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div>
+              <strong>Reset Local Data</strong>
+              <p class="muted">Clear saved matches, friends, and restore defaults</p>
+            </div>
+            <button id="reset-data-btn" class="btn btn-danger btn-sm">Reset All Data</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 14: ADMIN DASHBOARD -->
+      <section id="page-admin" class="page hidden">
+        <div class="page-head">
+          <h1>Admin Control Panel</h1>
+          <span class="pill pill-gold">Moderation &amp; Telemetry</span>
+        </div>
+        <div class="stats-grid-4">
+          <div class="stat-card"><span class="stat-label">Registered Users</span><strong id="admin-users-count" class="stat-value">0</strong></div>
+          <div class="stat-card"><span class="stat-label">Active Online</span><strong id="admin-online-count" class="stat-value accent">0</strong></div>
+          <div class="stat-card"><span class="stat-label">Matches Logged</span><strong id="admin-matches-count" class="stat-value gold">0</strong></div>
+          <div class="stat-card"><span class="stat-label">Open Reports</span><strong id="admin-reports-count" class="stat-value purple">0</strong></div>
+        </div>
+
+        <div class="section-grid-2">
+          <div class="card">
+            <h2>👤 User Moderation</h2>
+            <div id="admin-users-list" class="list-stack"></div>
+          </div>
+          <div class="card">
+            <h2>📩 Reports &amp; Feedback</h2>
+            <div id="admin-feedback-list" class="list-stack"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 15: HELP & SUPPORT -->
+      <section id="page-support" class="page hidden">
+        <div class="page-head">
+          <h1>How to Play &amp; Support</h1>
+        </div>
+        <div class="section-grid-2">
+          <div class="card">
+            <h2>📖 Game Rules &amp; Board Map</h2>
+            <ul class="rules-list">
+              <li>All players start at position <strong>0</strong> (off-board) and race to <strong>100</strong>.</li>
+              <li>Click <strong>Roll Dice</strong> (or press <kbd>Space</kbd>) to roll 1–6.</li>
+              <li>Land on a <strong>Ladder</strong> base to climb straight up to the top cell!</li>
+              <li>Land on a <strong>Snake</strong> head and slide down to its tail.</li>
+              <li><strong>Exact 100 Rule</strong>: If your roll goes past 100, you stay on your current tile.</li>
+              <li><strong>Bonus 6</strong>: When enabled in Settings, rolling a 6 grants an extra turn (3 consecutive 6s pass the turn).</li>
+            </ul>
+
+            <h3>🗺 Snakes &amp; Ladders Coordinates</h3>
+            <div class="map-chips">
+              <span class="chip ladder">🪜 2 → 38</span>
+              <span class="chip ladder">🪜 7 → 14</span>
+              <span class="chip ladder">🪜 28 → 84</span>
+              <span class="chip ladder">🪜 51 → 67</span>
+              <span class="chip ladder">🪜 71 → 91</span>
+              <span class="chip snake">🐍 16 → 6</span>
+              <span class="chip snake">🐍 49 → 11</span>
+              <span class="chip snake">🐍 62 → 18</span>
+              <span class="chip snake">🐍 87 → 24</span>
+              <span class="chip snake">🐍 99 → 54</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>🛠 Report a Problem / Feedback</h2>
+            <form id="support-form">
+              <div class="form-group">
+                <label for="support-category">Category</label>
+                <select id="support-category">
+                  <option value="feedback">Feature Suggestion</option>
+                  <option value="bug">Report a Bug</option>
+                  <option value="report">Player Report</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="support-subject">Subject</label>
+                <input id="support-subject" type="text" placeholder="Short summary..." required />
+              </div>
+              <div class="form-group">
+                <label for="support-message">Details</label>
+                <textarea id="support-message" rows="4" placeholder="Describe what happened..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit Ticket</button>
+              <span id="support-status-msg" class="save-msg"></span>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>© 2026 <strong>Snake &amp; Ladder Arena</strong> · Built for Desktop, Tablet &amp; Mobile</div>
+      <div class="footer-links">
+        <a href="#home" data-route="home">Home</a>
+        <a href="#modes" data-route="modes">Play</a>
+        <a href="#leaderboard" data-route="leaderboard">Leaderboard</a>
+        <a href="#settings" data-route="settings">Settings</a>
+        <a href="#support" data-route="support">Support</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- WINNER MODAL -->
+  <div id="winner-modal" class="modal-backdrop hidden">
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+    <div class="modal-card">
+      <div class="winner-trophy">🏆</div>
+      <h2 id="winner-title">Player Wins!</h2>
+      <p id="winner-subtitle" class="muted">Reached square 100 in 00:00</p>
+      <div id="winner-stats-summary" class="winner-summary"></div>
+      <div class="modal-actions">
+        <button id="play-again-btn" class="btn btn-primary">🔄 Play Again</button>
+        <button id="winner-dashboard-btn" class="btn btn-ghost">📊 Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAUSE OVERLAY MODAL -->
+  <div id="pause-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <h2>⏸ Game Paused</h2>
+      <p class="muted">Take a breather before your next roll.</p>
+      <div class="modal-actions">
+        <button id="resume-game-btn" class="btn btn-primary">▶ Resume Match</button>
+        <button id="quit-pause-btn" class="btn btn-ghost">Exit to Modes</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script defer src="js/data.js"></script>
+  <script defer src="js/audio.js"></script>
+  <script defer src="js/storage.js"></script>
+  <script defer src="js/board.js"></script>
+  <script defer src="js/game.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
